@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 urlpatterns = [
-    path("", include("fridge_cleaner.urls")),
+    path("", include("app_3ingredients.urls")),
     path("admin/", admin.site.urls),
 ]

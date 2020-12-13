@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Recipes(models.Model):
+class Recipe(models.Model):
     title = models.TextField()
     ingredients = models.TextField()
     description = models.TextField()
@@ -9,5 +9,5 @@ class Recipes(models.Model):
     servings = models.IntegerField()
     url = models.TextField()
     rating = models.IntegerField()
-    group = models.IntegerField()
+    category = models.IntegerField(null=True)
 

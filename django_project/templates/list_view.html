@@ -1,0 +1,91 @@
+{% extends "root.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static "css/list.css" %}">
+
+<div class="container text-center">
+    <a href="/"><img id="logo" src="{% static "images/logo.png" %}" alt="3 ingredients"/></a>
+    <div id="ingredients" style="background-image: url('{% static "images/ingredients_bg.png" %}');">
+        <div id="ingredients_list">
+            <h4 class="mt-5">Ingredients:</h4>
+            {% for ingredient in ingredients %}
+                <div class="my-1 font-weight-bold">{{ ingredient }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="results" class="col-lg-8 offset-lg-2 mt-3">
+        <h5 id="results_header" class="p-2">Results:</h5>
+        {% for recipe in recipes %}
+            <div>
+                <a href="#recipe-{{ recipe.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown" style="background-image: url('{% static "images/result_bg.png" %}');">{{ recipe.title }}</a>
+                <div class="collapse mb-3 scroll-top" id="recipe-{{ recipe.id }}">
+                    <div class="container result" style="background-image: url('{% static "images/recipe_bg.png" %}');">
+                        <div class="row">
+                            <div class="col mt-3"><h3>{{ recipe.title }}</h3></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5>Cooking time:</h5>
+                                {{ recipe.cooking_time }}
+                                <h5 class="mt-2">Servings:</h5>
+                                {{ recipe.servings }}
+                                <h5 class="mt-2">Ingredients:</h5>
+                                <ul>
+                                    {% for ingredient in recipe.ingredients %}
+                                    <li>{{ ingredient }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>Recipe:</h5>
+                                <ul>
+                                    {% for step in recipe.description %}
+                                    <li>{{ step }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <form id="{{ recipe.id }}" action="{% url 'app_3ingredients:rate' %}" method="POST" class="rating-form p-2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                                    <button id="rate-{{ recipe.id }}" class="btn" type="submit">Looks delicious!</button>
+                                </form>
+                                <div style="display: inline-block">Liked it: </div>
+                                <div id="rating-{{ recipe.id }}" style="display: inline-block">{{ recipe.rating }}</div>
+                                <a style="display: block; padding: 5px;" href="{{ recipe.url }}" target="_blank">See original recipe</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="bg-light my-4 p-3"><h4>No recipes found for your ingredients :(</h4></div>
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-dark my-4 page-button" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% else %}
+            <a class="btn btn-outline-dark my-4 page-button-inactive">Previous</a>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a id="current_page" class="btn my-4 font-weight-bold" style="background-color: #ca8017" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-dark my-4 page-button" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% else %}
+            <a class="btn btn-outline-dark my-4 page-button-inactive">Next</a>
+        {% endif %}
+    {% endif %}
+</div>
+
+<script src="{% static "js/scroll_top.js" %}"></script>
+<script src="{% static "js/recipe_cookies.js" %}"></script>
+<script src="{% static "js/recipe_rating.js" %}"></script>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+.search-button {
+    background-color: #cd640a;
+    border: 1px solid #a83c0f;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 18px;
+}
+.search-button:hover {
+    background-color: #bd4318;
+    border: 1px solid #95370b;
+}
+.instructions {
+    background-color: #ffffff;
+    border: 1px solid #727272;
+    border-radius: 5px;
+    height: 32px;
+    color: #1f1f1f;
+    font-size: 18px;
+}
+#id_ingredient_1, #id_ingredient_2, #id_ingredient_3 {
+    text-align: center;
+}
