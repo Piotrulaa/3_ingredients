@@ -1,19 +1,26 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+if not load_dotenv(os.path.join(BASE_DIR, ".env")):
+    # Couldn't load environment variables from .env file
+    raise FileNotFoundError(
+        f'You need to create .env file in {BASE_DIR} and set environment variables there!'
+    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0ju$gu8nz3kkw_c@y##)5$4m&3&78e6-yvmu5&9x8)c@0ho^k5'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = []
 
