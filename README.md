@@ -11,7 +11,7 @@ ingredients. User can also rate the recipe if he likes it.
 
 ### Usage of Machine Learning
 App uses clustering algorithm *k-means++* for dividing recipes into three
-groups, based parameters like number of ingredients, cooking time,
+groups, based on parameters like number of ingredients, cooking time,
 number of steps in recipe and how they were rated by users. These 
 groups are used to provide variety in search results.
 
